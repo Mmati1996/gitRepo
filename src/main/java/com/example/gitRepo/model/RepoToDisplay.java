@@ -8,6 +8,9 @@ public class RepoToDisplay {
     String ownerLogin;
     private ArrayList<BranchToDisplay> branches;
 
+    public RepoToDisplay() {
+    }
+
     public RepoToDisplay(Repository repository) {
         this.repositoryName = repository.getName();
         this.ownerLogin = repository.getOwner().getLogin();

@@ -10,6 +10,9 @@ public class BranchToDisplay {
         this.commitSha=branch.getCommit().getSha();
     }
 
+    public BranchToDisplay() {
+    }
+
     public String getName() {
         return name;
     }
