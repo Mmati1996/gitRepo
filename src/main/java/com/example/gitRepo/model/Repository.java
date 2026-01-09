@@ -1,7 +1,5 @@
 package com.example.gitRepo.model;
 
-import java.util.ArrayList;
-
 public class Repository {
     private Owner owner;
     private String name;
