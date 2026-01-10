@@ -4,6 +4,7 @@ import com.example.gitRepo.model.Branch;
 import com.example.gitRepo.model.BranchToDisplay;
 import com.example.gitRepo.model.RepoToDisplay;
 import com.example.gitRepo.model.Repository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -24,14 +25,12 @@ public class GitHubService {
         this.template = template;
     }
 
-    public List<RepoToDisplay> getNonForkRepos(String username){
+    public List<RepoToDisplay> getNonForkRepos(String username, HttpServletRequest request){
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.set("Accept","application/vnd.github+json");
-        httpHeaders.set("X-GitHub-Api-Version","2022-11-28");
-        httpHeaders.set("Authorization","Bearer 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");
+        httpHeaders.set("Accept",request.getHeader("Accept"));
+        httpHeaders.set("X-GitHub-Api-Version",request.getHeader("X-GitHub-Api-Version"));
+        httpHeaders.set("Authorization",request.getHeader("Authorization"));
         HttpEntity httpEntity = new HttpEntity(httpHeaders);
-
-        //Repository[] allRepos = template.getForObject(GITHUB_API_URL+"users/" + username + "/repos", Repository[].class);
         ResponseEntity<Repository[]> reposExchange = template.exchange(GITHUB_API_URL + "users/" + username + "/repos", HttpMethod.GET, httpEntity, Repository[].class);
         Repository[] allRepos = reposExchange.getBody();
         List<RepoToDisplay> toReturn = new ArrayList<>();
@@ -39,7 +38,6 @@ public class GitHubService {
         for (Repository repo : allRepos){
             RepoToDisplay repoToAdd = new RepoToDisplay(repo);
             if (!repo.isFork()){
-                //Branch[] allBranches = template.getForObject(GITHUB_API_URL+"repos/" + username + "/" + repo.getName() + "/branches", Branch[].class);
                 ResponseEntity<Branch[]> branchesExchange = template.exchange(GITHUB_API_URL + "repos/" + username + "/" + repo.getName() + "/branches", HttpMethod.GET, httpEntity, Branch[].class);
                 Branch[] allBranches = branchesExchange.getBody();
                 assert allBranches != null : "failed to fetch "+repo.getName()+" branches";

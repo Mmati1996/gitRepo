@@ -26,7 +26,7 @@ public class GitHubController {
     @GetMapping("/repos")
     public ResponseEntity<?> getUserRepositories(@RequestParam String username, HttpServletRequest request){
         try{
-            List<RepoToDisplay> repos = gitHubService.getNonForkRepos(username);
+            List<RepoToDisplay> repos = gitHubService.getNonForkRepos(username, request);
             return ResponseEntity.ok(repos);
         }catch (Exception e){
 

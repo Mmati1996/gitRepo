@@ -25,7 +25,6 @@ class GitRepoApplicationTests {
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.set("Accept","application/vnd.github+json");
 		httpHeaders.set("X-GitHub-Api-Version","2022-11-28");
-		httpHeaders.set("Authorization","Bearer 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");
 		HttpEntity httpEntity = new HttpEntity(httpHeaders);
 		try {
 			ResponseEntity<ExceptionResponse[]> responseEntity = restTemplate.exchange("http://localhost:"+port+"/repos?username=zse@#%ffa^^", HttpMethod.GET, httpEntity, ExceptionResponse[].class);
@@ -42,7 +41,6 @@ class GitRepoApplicationTests {
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.set(HttpHeaders.ACCEPT,"application/vnd.github+json");
 		httpHeaders.set("X-GitHub-Api-Version","2022-11-28");
-		httpHeaders.set("Authorization","Bearer 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");
 		HttpEntity httpEntity = new HttpEntity(httpHeaders);
 		ResponseEntity<RepoToDisplay[]> responseEntity = restTemplate.exchange("http://localhost:"+port+"/repos?username=Mmati1996", HttpMethod.GET, httpEntity, RepoToDisplay[].class);
 
